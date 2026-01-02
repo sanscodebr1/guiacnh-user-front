@@ -1,0 +1,65 @@
+/* Projeto: Tema global do marketplace
+   Variáveis para cores, fontes, espaçamentos e bordas.
+*/
+:root {
+  /* Cores */
+  --color-primary: #0b5fff;
+  --color-secondary: #00bfa6;
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-foreground: #111111;
+  --color-muted: #6b7280;
+  --color-border: #e6e6e6;
+
+  /* Inputs / surfaces */
+  --color-input-bg: #fafafa;
+
+  /* Tipografia */
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+
+  /* Espaçamentos e radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  /* Sombra */
+  --shadow-sm: 0 1px 2px rgba(16,24,40,0.05);
+  --shadow-md: 0 4px 16px rgba(16,24,40,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0a0a0a;
+    --color-surface: #0f1724;
+    --color-foreground: #e6eef6;
+    --color-muted: #9aa4b2;
+    --color-border: rgba(255,255,255,0.06);
+    --color-input-bg: #0b1220;
+  }
+}
+
+/* Base global ----------------------------------------------------------*/
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Helpers úteis */
+.container-tight {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}

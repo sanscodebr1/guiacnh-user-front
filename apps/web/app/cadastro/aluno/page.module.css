@@ -1,0 +1,118 @@
+.page {
+  padding: calc(var(--spacing-lg) + 8px);
+  padding-bottom: calc(84px + var(--spacing-lg));
+  background:
+    radial-gradient(120% 120% at 10% 0%, rgba(11,95,255,0.08), transparent 60%),
+    radial-gradient(120% 120% at 90% 10%, rgba(0,191,166,0.08), transparent 55%),
+    #f5f6fb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 4px var(--spacing-sm) 0;
+}
+
+.backButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+  color: #111827;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.headerTitle {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.headerSpacer {
+  width: 40px;
+  height: 40px;
+}
+
+.form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+  box-shadow: 0 14px 26px rgba(17, 24, 39, 0.10);
+}
+
+.inputGroup {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 700;
+}
+
+.inputGroup input {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #111827;
+  background: #ffffff;
+  width: 100%;
+  min-width: 0;
+}
+
+.errorText {
+  font-size: 11px;
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px;
+  gap: 10px;
+}
+
+.checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.ctaButton {
+  margin-top: 6px;
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+}
+
+.ctaButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: var(--spacing-lg);
+  }
+}
