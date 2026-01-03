@@ -3,8 +3,26 @@ import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 
+const lessonOptions = [
+  { id: "avulsa", label: "Aula pratica avulsa", price: "R$ 80,00" },
+  { id: "pacote-5", label: "Pacote 5 aulas", price: "R$ 360,00" },
+  { id: "simulacao", label: "Simulacao de prova", price: "R$ 120,00" },
+];
+
 export default function AgendarAulaPage() {
   const [localChoice, setLocalChoice] = useState<"sugerido" | "outro">("sugerido");
+  const [selectedType, setSelectedType] = useState(lessonOptions[0].id);
+  const [quantities, setQuantities] = useState<Record<string, number>>(() => (
+    Object.fromEntries(lessonOptions.map((option) => [option.id, 1])) as Record<string, number>
+  ));
+
+  const handleQuantityChange = (id: string, delta: number) => {
+    setQuantities((prev) => {
+      const current = prev[id] ?? 1;
+      const next = Math.max(1, current + delta);
+      return { ...prev, [id]: next };
+    });
+  };
 
   return (
     <main className={styles.page}>
@@ -28,10 +46,44 @@ export default function AgendarAulaPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Qual aula voce quer agendar?</h2>
         <div className={styles.optionGroup}>
-          {["Aula pratica avulsa", "Pacote 5 aulas", "Simulacao de prova"].map((label, idx) => (
-            <label key={label} className={styles.option}>
-              <input type="radio" name="tipo" defaultChecked={idx === 0} />
-              <span>{label}</span>
+          {lessonOptions.map((option) => (
+            <label key={option.id} className={styles.option}>
+              <input
+                type="radio"
+                name="tipo"
+                checked={selectedType === option.id}
+                onChange={() => setSelectedType(option.id)}
+              />
+              <div className={styles.optionContent}>
+                <span className={styles.optionText}>{option.label}</span>
+                <div className={styles.optionActions}>
+                  <span className={styles.optionPrice}>{option.price}</span>
+                  <div
+                    className={styles.qtyControls}
+                    role="group"
+                    aria-label={`Quantidade ${option.label}`}
+                  >
+                    <button
+                      type="button"
+                      className={styles.qtyButton}
+                      onClick={() => handleQuantityChange(option.id, -1)}
+                      aria-label={`Diminuir quantidade de ${option.label}`}
+                      disabled={quantities[option.id] <= 1}
+                    >
+                      -
+                    </button>
+                    <span className={styles.qtyValue}>{quantities[option.id]}</span>
+                    <button
+                      type="button"
+                      className={styles.qtyButton}
+                      onClick={() => handleQuantityChange(option.id, 1)}
+                      aria-label={`Aumentar quantidade de ${option.label}`}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
             </label>
           ))}
         </div>

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -7,6 +8,14 @@ export default function CadastroAlunoPage() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const passwordsMismatch = confirm.length > 0 && password !== confirm;
+  const router = useRouter();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (passwordsMismatch) return;
+    window.localStorage.setItem("accessMode", "authenticated");
+    router.push("/home");
+  };
 
   return (
     <main className={styles.page}>
@@ -18,7 +27,7 @@ export default function CadastroAlunoPage() {
         <div className={styles.headerSpacer} />
       </header>
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
           <label htmlFor="nome">Nome</label>
           <input id="nome" placeholder="Digite seu nome" />
@@ -78,7 +87,7 @@ export default function CadastroAlunoPage() {
           <input type="checkbox" />
           <span>Li e aceito os termos de uso</span>
         </label>
-        <button className={styles.ctaButton} type="button" disabled={passwordsMismatch}>
+        <button className={styles.ctaButton} type="submit" disabled={passwordsMismatch}>
           Criar conta
         </button>
       </form>

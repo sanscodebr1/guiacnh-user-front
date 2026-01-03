@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -7,6 +8,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,7 +16,14 @@ export default function LoginPage() {
     // Simulação de chamada; substituir por integração real de API
     await new Promise((r) => setTimeout(r, 600));
     console.log("login:", { email, password });
+    window.localStorage.setItem("accessMode", "authenticated");
     setLoading(false);
+    router.push("/home");
+  };
+
+  const handleGuestAccess = () => {
+    window.localStorage.setItem("accessMode", "guest");
+    router.push("/home");
   };
 
   return (
@@ -47,7 +56,7 @@ export default function LoginPage() {
         <button className={styles.submit} type="submit" disabled={loading}>
           {loading ? "Entrando..." : "Entrar"}
         </button>
-        <button className={styles.secondary} type="button">
+        <button className={styles.secondary} type="button" onClick={handleGuestAccess}>
           Acessar sem login
         </button>
 

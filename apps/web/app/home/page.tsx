@@ -17,6 +17,7 @@ export default function HomePage() {
   const [addressState, setAddressState] = useState("");
   const [activeStep, setActiveStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
+  const [isGuest, setIsGuest] = useState(false);
   const steps = [
     { title: "Comece por aqui", slug: "comece-por-aqui" },
     { title: "Abertura do processo", slug: "abertura-do-processo" },
@@ -31,7 +32,7 @@ export default function HomePage() {
   ];
 
   useEffect(() => {
-    const load = () => {
+    const loadSteps = () => {
       const stored = window.localStorage.getItem("completedJourneySteps");
       if (!stored) {
         setCompletedSteps([]);
@@ -43,10 +44,18 @@ export default function HomePage() {
         setCompletedSteps([]);
       }
     };
-    load();
+    const loadAccessMode = () => {
+      const mode = window.localStorage.getItem("accessMode");
+      setIsGuest(mode === "guest");
+    };
+    loadSteps();
+    loadAccessMode();
     const handler = (event: StorageEvent) => {
       if (event.key === "completedJourneySteps") {
-        load();
+        loadSteps();
+      }
+      if (event.key === "accessMode") {
+        loadAccessMode();
       }
     };
     window.addEventListener("storage", handler);
@@ -90,42 +99,52 @@ export default function HomePage() {
       <section className={styles.progressCard} aria-label="Acompanhamento do aluno">
         <div className={styles.progressHeader}>
           <span className={styles.xpLabel}>Acompanhamento</span>
-          <Link className={styles.journeyLink} href="/minha-jornada">
-            Ver minha jornada
-          </Link>
+          {!isGuest && (
+            <Link className={styles.journeyLink} href="/minha-jornada">
+              Ver minha jornada
+            </Link>
+          )}
         </div>
-        <div
-          className={styles.timelineWrap}
-          style={{ "--steps-count": steps.length } as React.CSSProperties}
-        >
-          <div className={styles.progressTimeline}>
-            <div className={styles.progressSteps} role="list">
-              <div className={styles.progressTrack} aria-hidden>
-                <div
-                  className={styles.progressFill}
-                  style={{ width: `${(activeStep / Math.max(1, steps.length - 1)) * 100}%` }}
-                />
+        {isGuest ? (
+          <div className={styles.guestCta}>
+            <Link className={styles.startJourneyBtn} href="/minha-jornada">
+              Iniciar jornada
+            </Link>
+          </div>
+        ) : (
+          <div
+            className={styles.timelineWrap}
+            style={{ "--steps-count": steps.length } as React.CSSProperties}
+          >
+            <div className={styles.progressTimeline}>
+              <div className={styles.progressSteps} role="list">
+                <div className={styles.progressTrack} aria-hidden>
+                  <div
+                    className={styles.progressFill}
+                    style={{ width: `${(activeStep / Math.max(1, steps.length - 1)) * 100}%` }}
+                  />
+                </div>
+                {steps.map((step, idx) => {
+                  const isDone = completedSteps.includes(step.slug);
+                  const isCurrent = idx === activeStep;
+                  const status = isDone ? "completo" : isCurrent ? "em andamento" : "previsto";
+                  return (
+                    <button
+                      key={step.slug}
+                      type="button"
+                      className={`${styles.progressStep} ${isDone ? styles.stepDone : ""} ${isCurrent ? styles.stepCurrent : ""}`}
+                      aria-current={isCurrent}
+                    >
+                      <span className={styles.stepDot} aria-hidden>{isDone ? "OK" : idx + 1}</span>
+                      <span className={styles.stepLabel}>{step.title}</span>
+                      <span className={styles.stepStatus}>{status}</span>
+                    </button>
+                  );
+                })}
               </div>
-              {steps.map((step, idx) => {
-                const isDone = completedSteps.includes(step.slug);
-                const isCurrent = idx === activeStep;
-                const status = isDone ? "completo" : isCurrent ? "em andamento" : "previsto";
-                return (
-                  <button
-                    key={step.slug}
-                    type="button"
-                    className={`${styles.progressStep} ${isDone ? styles.stepDone : ""} ${isCurrent ? styles.stepCurrent : ""}`}
-                    aria-current={isCurrent}
-                  >
-                    <span className={styles.stepDot} aria-hidden>{isDone ? "OK" : idx + 1}</span>
-                    <span className={styles.stepLabel}>{step.title}</span>
-                    <span className={styles.stepStatus}>{status}</span>
-                  </button>
-                );
-              })}
             </div>
           </div>
-        </div>
+        )}
       </section>
 
       <section className={styles.section}>

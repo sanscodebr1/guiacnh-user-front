@@ -1,6 +1,6 @@
 .page {
   padding: calc(var(--spacing-lg) + 8px);
-  padding-bottom: calc(84px + var(--spacing-lg));
+  padding-bottom: calc(120px + var(--spacing-lg));
   background:
     radial-gradient(120% 120% at 10% 0%, rgba(11,95,255,0.08), transparent 60%),
     radial-gradient(120% 120% at 90% 10%, rgba(0,191,166,0.08), transparent 55%),
@@ -314,6 +314,7 @@
 @media (max-width: 640px) {
   .page {
     padding: var(--spacing-lg);
+    padding-bottom: calc(120px + var(--spacing-lg));
   }
   .itemButton {
     grid-template-columns: 56px 1fr;

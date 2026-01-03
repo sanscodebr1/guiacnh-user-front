@@ -121,6 +121,72 @@
   border-radius: 12px;
 }
 
+.optionContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.optionText {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.optionActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.optionPrice {
+  font-size: 11px;
+  font-weight: 800;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.qtyControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.qtyButton {
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 999px;
+  background: #111827;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 12px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.qtyButton:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.qtyValue {
+  min-width: 16px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #111827;
+}
+
 .optionLabel {
   display: grid;
   gap: 2px;
